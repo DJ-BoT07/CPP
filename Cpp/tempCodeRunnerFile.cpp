@@ -1,0 +1,1 @@
+Test *ptr_obj; 
