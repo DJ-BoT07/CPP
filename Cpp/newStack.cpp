@@ -1,127 +1,94 @@
 #include <iostream>
+#include <string>
 using namespace std;
 
-class Queue
+const int MAX = 100;
+
+class Stack
 {
 private:
-    const static int maxSize = 100;
-    int arr[maxSize];
-    int front;
-    int rear;
-    int element;
+    char stack[MAX];
+    int top;
 
 public:
-    Queue() : front(-1), rear(-1) {}
-
-    void push_front()
+    Stack()
     {
-        cout << "Enter element : ";
-        cin >> element;
-        if (isFull())
-            cout << "Queue is full" << endl;
-        else if (front == -1)
-        {
-            front = rear = 0;
-            arr[front] = element;
-        }
-        else if (front == 0)
-        {
-            front = maxSize - 1;
-            arr[front] = element;
-        }
-        else
-        {
-            front--;
-            arr[front] = element;
-        }
+        this->top = -1;
     }
 
-    void push_rear()
+    bool IsEmpty()
     {
-        cout << "Enter element : ";
-        cin >> element;
-        if (isFull())
-            cout << "Queue is full" << endl;
-        else if (front == -1)
+        return top == -1;
+    }
+
+    void Push(char ch)
+    {
+        if (top == MAX - 1)
         {
-            front = rear = 0;
-            arr[rear] = element;
-        }
-        else if (rear == maxSize - 1)
-        {
-            rear = 0;
-            arr[rear] = element;
-        }
-        else
-        {
-            rear++;
-            arr[rear] = element;
-        }
-    }
-
-    void pop_front()
-    {
-        if (isEmpty())
-            cout << "Queue is empty" << endl;
-        else if (front == rear)
-            front = rear = -1;
-        else if (front == maxSize - 1)
-            front = 0;
-        else
-            front++;
-    }
-
-    void pop_rear()
-    {
-        if (isEmpty())
-            cout << "Queue is empty" << endl;
-        else if (front == rear)
-            front = rear = -1;
-        else if (rear == 0)
-            rear = maxSize - 1;
-        else
-            rear--;
-    }
-
-    bool isFull() const
-    {
-        return (front == 0 && rear == maxSize - 1) || (rear + 1 == front);
-    }
-
-    bool isEmpty() const
-    {
-        return front == -1;
-    }
-
-    void display()
-    {
-        if (isEmpty())
-        {
-            cout << "Queue is empty" << endl;
+            cout << "Stack is Full" << endl;
             return;
         }
+        stack[++top] = ch;
+    }
 
-        cout << "Queue elements: ";
-        int i = front;
-        do
+    int Pop()
+    {
+        if (IsEmpty())
         {
-            cout << arr[i] << " ";
-            i = (i + 1) % maxSize;
-        } while (i != (rear + 1) % maxSize && i != front);
+            cout << "Stack is Empty" << endl;
+            return 0;
+        }
+        return stack[top--];
+    }
 
-        cout << endl;
+    void Display()
+    {
+        if (IsEmpty())
+        {
+            cout << "Stack is Empty" << endl;
+        }
+        for (int i = top; i >= 0; i--)
+        {
+            cout << stack[i] << endl;
+        }
     }
 };
 
 int main()
 {
-    Queue q;
-    q.push_rear();
-    q.push_rear();
-    q.push_front();
-    q.pop_front();
-    q.pop_rear();
-    q.display();
+    Stack stk;
+    char ch;
+    int count = 0; // Initialize count to 0
+    cout << "Enter a string: ";
+    
+    // Read a whole string instead of a single character
+    string input;
+    cin >> input;
+    
+    for (char c : input) {
+        stk.Push(c);
+        count += 1; // Move count increment inside the loop
+    }
+
+    bool isP = true;
+    for (int i = 0; i < count; i++)
+    {
+        char pos = stk.Pop(); // Use a separate variable to store the popped character
+        if (input[i] != pos)
+        {
+            isP = false;
+            break;
+        }
+    }
+
+    if (isP)
+    {
+        cout << "The entered string is a palindrome." << endl;
+    }
+    else
+    {
+        cout << "The entered string is not a palindrome." << endl;
+    }
 
     return 0;
 }

@@ -3,7 +3,8 @@
 
 using namespace std;
 
-class Student {
+class Student
+{
 private:
     string name;
     int roll_no;
@@ -16,36 +17,36 @@ private:
     long dlno;
 
 public:
-    // Default Constructor
-    Student() : roll_no(0), division(' '), dob("dd/mm/yyyy") {}
-
-    // Destructor not needed
-
-    void getData() {
-        cout << "Enter Student Name: ";
+    Student()
+    {
+        roll_no = 0;
+        division = ' ';
+        dob = "dd/mm/yyyy";
+    }
+    void getData()
+    {
+        cout << "\nEnter the Name : ";
         getline(cin, name);
-        cout << "Enter Roll Number: ";
+        cout << "Enter Roll No. : ";
         cin >> roll_no;
-        cout << "Enter Class: ";
-        cin >> cls;
-        cout << "Enter Division: ";
+        cout << "Enter Class : ";
+        getline(cin, cls);
+        cout << "Division (A/B/C/D) : ";
         cin >> division;
-        cout << "Enter Date of Birth: ";
-        cin >> dob;
-        cout << "Enter Blood Group: ";
-        cin >> bloodgroup;
-
-        // Get additional data
-        cout << "Enter Contact Address: ";
-        cin.ignore(); // Ignore newline character in buffer
+        cout << "Date of Birth (DD/MM/YYYY): ";
+        getline(cin, dob);
+        cout << "Blood Group : ";
+        getline(cin, bloodgroup);
+        cout << "Correspondence Address : ";
         getline(cin, caddress);
-        cout << "Enter Telephone Number: ";
+        cout << "Telephone Number : ";
         cin >> telno;
-        cout << "Enter Driving License Number: ";
+        cout << "DL Number : ";
         cin >> dlno;
     }
 
-    void dispData() {
+    void dispData()
+    {
         cout << "Student Name: " << name << endl;
         cout << "Roll Number: " << roll_no << endl;
         cout << "Class: " << cls << endl;
@@ -58,19 +59,18 @@ public:
         cout << "Telephone Number: " << telno << endl;
         cout << "Driving License Number: " << dlno << endl;
     }
-
-    static int getCount() {
-        // Assuming count is the number of created student objects
+    static int count()
+    {
         static int count = 0;
         return count;
     }
 };
 
-int main() {
-    Student* students[100];
+int main()
+{
+    Student *students[100];
     int n = 0;
     char ch;
-
     do {
         students[n] = new Student;
         students[n]->getData();
@@ -79,15 +79,11 @@ int main() {
         cin >> ch;
     } while (ch == 'y' || ch == 'Y');
 
-    for (int i = 0; i < n; i++) {
-        cout << "---------------------------------------------------------------\n";
+    for(int i = 0;i < n; i++){
         students[i]->dispData();
-        delete students[i]; // Release memory
+        delete students[i];
     }
-
-    cout << "---------------------------------------------------------------\n";
-    cout << "Total Students: " << Student::getCount() << endl;
-    cout << "---------------------------------------------------------------\n";
-
+    //total count
+    cout<<"Total number of Students: "<<Student::count()<<endl;
     return 0;
 }

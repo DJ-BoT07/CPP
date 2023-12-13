@@ -1,5 +1,7 @@
 #include <iostream>
 
+using namespace std;
+
 class Deque {
 private:
     static const int maxSize = 5;  // Maximum size of the deque
@@ -12,7 +14,7 @@ public:
     // Function to insert element at the front of the deque
     void insertFront(int value) {
         if ((front == 0 && rear == maxSize - 1) || (rear + 1 == front)) {
-            std::cout << "Deque is full. Cannot insert at the front." << std::endl;
+            cout << "Deque is full. Cannot insert at the front." << endl;
         } else {
             if (front == -1) {
                 front = rear = 0;
@@ -22,14 +24,14 @@ public:
                 front--;
             }
             arr[front] = value;
-            std::cout << value << " inserted at the front of the deque." << std::endl;
+            cout << value << " inserted at the front of the deque." << endl;
         }
     }
 
     // Function to insert element at the rear of the deque
     void insertRear(int value) {
         if ((front == 0 && rear == maxSize - 1) || (rear + 1 == front)) {
-            std::cout << "Deque is full. Cannot insert at the rear." << std::endl;
+            cout << "Deque is full. Cannot insert at the rear." << endl;
         } else {
             if (front == -1) {
                 front = rear = 0;
@@ -39,16 +41,16 @@ public:
                 rear++;
             }
             arr[rear] = value;
-            std::cout << value << " inserted at the rear of the deque." << std::endl;
+            cout << value << " inserted at the rear of the deque." << endl;
         }
     }
 
     // Function to delete element from the front of the deque
     void deleteFront() {
         if (isEmpty()) {
-            std::cout << "Deque is empty. Cannot delete from the front." << std::endl;
+            cout << "Deque is empty. Cannot delete from the front." << endl;
         } else {
-            std::cout << arr[front] << " deleted from the front of the deque." << std::endl;
+            cout << arr[front] << " deleted from the front of the deque." << endl;
             if (front == rear) {
                 front = rear = -1;  // The deque is now empty
             } else if (front == maxSize - 1) {
@@ -62,9 +64,9 @@ public:
     // Function to delete element from the rear of the deque
     void deleteRear() {
         if (isEmpty()) {
-            std::cout << "Deque is empty. Cannot delete from the rear." << std::endl;
+            cout << "Deque is empty. Cannot delete from the rear." << endl;
         } else {
-            std::cout << arr[rear] << " deleted from the rear of the deque." << std::endl;
+            cout << arr[rear] << " deleted from the rear of the deque." << endl;
             if (front == rear) {
                 front = rear = -1;  // The deque is now empty
             } else if (rear == 0) {
@@ -88,15 +90,15 @@ public:
     // Function to display the elements of the deque
     void display() const {
         if (isEmpty()) {
-            std::cout << "Deque is empty." << std::endl;
+            cout << "Deque is empty." << endl;
         } else {
-            std::cout << "Deque elements: ";
+            cout << "Deque elements: ";
             int i = front;
             do {
-                std::cout << arr[i] << " ";
+                cout << arr[i] << " ";
                 i = (i + 1) % maxSize;
             } while (i != (rear + 1) % maxSize);
-            std::cout << std::endl;
+            cout << endl;
         }
     }
 };

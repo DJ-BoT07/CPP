@@ -3,33 +3,35 @@
 #include <string>
 
 using namespace std;
-
 typedef map<string, int> mapType;
 
-void displayPopulation(const mapType& populationMap) {
-    mapType::const_iterator iter; // Change iterator type to const_iterator
+void displayPopulation(mapType &populationMap)
+{
+    mapType::const_iterator it;
     cout << "\n========Population of states in India==========\n";
-    cout << "\nSize of populationMap: " << populationMap.size() << "\n";
-    string state_name;
+    cout << "SIze of PopulationMap : " << populationMap.size() << endl;
+    string name;
     char ch;
 
-    do {
-        cout << "\nEnter name of the state: ";
-        getline(cin, state_name);
+    do
+    {
+        cout << "Enter the name of State: ";
+        cin >> name;
 
-        iter = populationMap.find(state_name);
-        if (iter != populationMap.end())
-            cout << state_name << "'s population is " << iter->second << endl;
+        it = populationMap.find(name);
+        if (it != populationMap.end())
+            cout << name << " s population is " << it->second << endl;
         else
-            cout << "Key is not in populationMap\n";
+            cout << "Key not found" << endl;
 
-        cout << "Enter choice (y/n): ";
+        cout << "ENter the choice :";
         cin >> ch;
-        cin.ignore(); // Ignore the newline character left in the buffer
+
     } while (ch == 'y');
 }
 
-int main() {
+int main()
+{
     mapType populationMap;
     populationMap.insert(pair<string, int>("Maharashtra", 7026357));
     populationMap.insert(pair<string, int>("Rajasthan", 6578936));

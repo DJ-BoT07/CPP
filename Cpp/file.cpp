@@ -9,7 +9,7 @@ public:
 };
 
 void Test::writeData() {
-    ofstream file("it.txt");
+    ofstream file("it.txt",ios::app);
     char ch;
     
     cout << "Enter data (enter '.' to stop): ";

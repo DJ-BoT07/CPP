@@ -1,24 +1,33 @@
 #include <iostream>
-#include <string>
 using namespace std;
 
-class Seat {
+class Seat
+{
 public:
     int seatNumber;
     bool booked;
-    string userId;
-    Seat* next;
-    Seat* prev;
+    string userID;
+    Seat *next;
+    Seat *prev;
 
-    Seat(int number) : seatNumber(number), booked(false), userId(""), next(nullptr), prev(nullptr) {}
+    Seat(int number)
+    {
+        this->seatNumber = number;
+        this->booked = false;
+        this->userID = "";
+        this->next = NULL;
+        this->prev = NULL;
+    }
 };
 
-class Cinemax {
+class Cinemax
+{
 private:
-    Seat* heads[10];  // Array of pointers to the head of each row
+    Seat *heads[10];
 
 public:
-    Cinemax() {
+    Cinemax()
+    {
         createList();
     }
 
@@ -29,14 +38,17 @@ public:
     void displayAvailableSeats();
 };
 
-void Cinemax::createList() {
-    for (int i = 0; i < 10; ++i) {
-        Seat* head = new Seat(1);
-        Seat* tail = head;
+void Cinemax::createList()
+{
+    for (int i = 0; i < 10; i++)
+    {
+        Seat *head = new Seat(1);
+        Seat *tail = head;
         head->prev = tail;
 
-        for (int j = 2; j <= 7; ++j) {
-            Seat* newNode = new Seat(j);
+        for (int j = 2; j <= 7; ++j)
+        {
+            Seat *newNode = new Seat(j);
             newNode->prev = tail;
             tail->next = newNode;
             tail = newNode;
@@ -46,22 +58,26 @@ void Cinemax::createList() {
         heads[i] = head;
     }
 
-    // Randomly book some seats for demonstration
-    for (int i = 0; i < 10; ++i) {
-        Seat* seatToBook = heads[i];
-        for (int j = 0; j < 5; ++j) {
+    for (int i = 0; i < 10; i++)
+    {
+        Seat *seatToBook = heads[i];
+        for (int j = 0; j < 5; ++j)
+        {
             seatToBook->booked = true;
-            seatToBook->userId = "RandomBooking";
+            seatToBook->userID = "RandomBooking";
             seatToBook = seatToBook->next;
         }
     }
 }
 
-void Cinemax::displaySeats() {
-    for (int i = 0; i < 10; ++i) {
-        Seat* temp = heads[i];
-        cout << "Row " << i + 1 << ": ";
-        do {
+void Cinemax::displaySeats()
+{
+    for (int i = 0; i < 10; ++i)
+    {
+        Seat *temp = heads[i];
+        cout << " Row " << i + 1 << ": ";
+        do
+        {
             cout << (temp->booked ? "[B]" : "[ ]") << " ";
             temp = temp->next;
         } while (temp != heads[i]);
@@ -69,48 +85,57 @@ void Cinemax::displaySeats() {
     }
 }
 
-void Cinemax::bookSeat() {
+void Cinemax::bookSeat()
+{
     int row, seat;
     cout << "Enter row number (1-10): ";
     cin >> row;
 
-    if (row < 1 || row > 10) {
-        cout << "Invalid row number.\n";
+    if (row < 1 || row > 10)
+    {
+        cout << "Invalid";
         return;
     }
-
     cout << "Enter seat number (1-7): ";
     cin >> seat;
 
-    if (seat < 1 || seat > 7) {
+    if (seat < 1 || seat > 7)
+    {
         cout << "Invalid seat number.\n";
         return;
     }
 
-    Seat* temp = heads[row - 1];
-    do {
-        if (temp->seatNumber == seat) {
+    Seat *temp = heads[row - 1];
+    do
+    {
+        if (temp->seatNumber == seat)
+        {
             break;
         }
         temp = temp->next;
     } while (temp != heads[row - 1]);
 
-    if (temp->booked) {
-        cout << "Seat already booked!\n";
-    } else {
+        if (temp->booked)
+    {
+        cout << "Already Booked" << endl;
+    }
+    else
+    {
         temp->booked = true;
         cout << "Enter your ID: ";
-        cin >> temp->userId;
+        cin >> temp->userID;
         cout << "Seat " << seat << " in Row " << row << " booked!\n";
     }
 }
 
-void Cinemax::cancelBooking() {
+void Cinemax::cancelBooking()
+{
     int row, seat;
     cout << "Enter row number (1-10): ";
     cin >> row;
 
-    if (row < 1 || row > 10) {
+    if (row < 1 || row > 10)
+    {
         cout << "Invalid row number.\n";
         return;
     }
@@ -118,41 +143,47 @@ void Cinemax::cancelBooking() {
     cout << "Enter seat number (1-7): ";
     cin >> seat;
 
-    if (seat < 1 || seat > 7) {
+    if (seat < 1 || seat > 7)
+    {
         cout << "Invalid seat number.\n";
         return;
     }
 
-    Seat* temp = heads[row - 1];
-    do {
-        if (temp->seatNumber == seat) {
+    Seat *temp = heads[row - 1];
+    do
+    {
+        if (temp->seatNumber == seat)
+        {
             break;
         }
         temp = temp->next;
     } while (temp != heads[row - 1]);
-
-    if (!temp->booked) {
+    if (!temp->booked)
+    {
         cout << "Seat not booked yet!\n";
-    } else {
+    }
+    else
+    {
         temp->booked = false;
-        temp->userId = "";
+        temp->userID = "";
         cout << "Booking for seat " << seat << " in Row " << row << " cancelled!\n";
     }
 }
 
-void Cinemax::displayAvailableSeats() {
-    for (int i = 0; i < 10; ++i) {
+void Cinemax::displayAvailableSeats(){
+    for(int i = 0; i < 10; ++i){
         Seat* temp = heads[i];
         cout << "Row " << i + 1 << " Available Seats: ";
-        do {
-            if (!temp->booked) {
-                cout << temp->seatNumber << " ";
-            }
-            temp = temp->next;
-        } while (temp != heads[i]);
-        cout << endl;
+        do{
+            if(!temp->booked){
+                cout<<temp->seatNumber<<" ";
+           }
+           temp = temp->next;
+        } while(temp != heads[i]);
+        cout<<endl;
     }
 }
+
 
 int main() {
     Cinemax cinemax;

@@ -1,1 +1,1 @@
-Test *ptr_obj; 
+        char stack[MAX];
